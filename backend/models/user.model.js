@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 
+// ------------------ USER SHEMA ------------------
 const userSchema = new mongoose.Schema(
   {
     username: {
@@ -33,3 +34,41 @@ const userSchema = new mongoose.Schema(
 );
 
 export const User = mongoose.model("User", userSchema);
+
+// ------------------ POST SHEMA ------------------
+const postSchema = new mongoose.Schema(
+  {
+    title: {
+      type: String,
+      required: true,
+      trim: true,
+      maxlength: 100,
+    },
+    content: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    author: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User", // référence au modèle User
+      required: true,
+    },
+    likes: {
+      type: Number,
+      default: 0,
+    },
+    comments: [
+      {
+        user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+        comment: { type: String, required: true },
+        createdAt: { type: Date, default: Date.now },
+      },
+    ],
+  },
+  {
+    timestamps: true, // createdAt et updatedAt automatiquement
+  }
+);
+
+export const Post = mongoose.model("Post", postSchema);
