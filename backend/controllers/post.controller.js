@@ -98,3 +98,24 @@ export const updatePost = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
+// ------------------ GET POST BY ID ------------------
+export const getPostById = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ message: "ID invalide" });
+    }
+
+    const post = await Post.findById(id).populate("author", "username");
+
+    if (!post) {
+      return res.status(404).json({ message: "Post non trouvé" });
+    }
+
+    res.status(200).json(post);
+  } catch (error) {
+    res.status(500).json({ message: "Internal server error" });
+  }
+};

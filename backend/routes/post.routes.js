@@ -3,6 +3,7 @@ import { authMiddleware } from "../middleware/auth.middleware.js"; // middleware
 import {
   createPost,
   deletePost,
+  getPostById,
   getPosts,
   updatePost,
 } from "../controllers/post.controller.js";
@@ -16,5 +17,6 @@ router.get("/", getPosts);
 router.post("/", authMiddleware, createPost);
 router.delete("/:id", authMiddleware, deletePost);
 router.put("/:id", authMiddleware, updatePost);
+router.get("/:id", getPostById);
 
 export default router;
