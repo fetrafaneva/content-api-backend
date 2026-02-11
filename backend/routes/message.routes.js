@@ -4,6 +4,7 @@ import {
   sendMessage,
   getConversation,
   getInbox,
+  markMessageAsRead,
 } from "../controllers/message.controller.js";
 
 const router = express.Router();
@@ -12,5 +13,8 @@ const router = express.Router();
 router.post("/", authMiddleware, sendMessage);
 router.get("/inbox", authMiddleware, getInbox);
 router.get("/conversation/:userId", authMiddleware, getConversation);
+
+// marquer comme lu
+router.patch("/:id/read", authMiddleware, markMessageAsRead);
 
 export default router;

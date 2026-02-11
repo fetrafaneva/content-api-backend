@@ -71,3 +71,41 @@ export const getInbox = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
+// ------------------ MARK AS READ ------------------
+export const markMessageAsRead = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ message: "Message ID invalide" });
+    }
+
+    const message = await Message.findById(id);
+
+    if (!message) {
+      return res.status(404).json({ message: "Message non trouvé" });
+    }
+
+    // seul le receiver peut marquer comme lu
+    if (message.receiver.toString() !== req.user._id.toString()) {
+      return res.status(403).json({ message: "Accès refusé" });
+    }
+
+    // déjà lu → inutile de modifier
+    if (message.isRead) {
+      return res.status(200).json({ message: "Message déjà lu" });
+    }
+
+    message.isRead = true;
+    await message.save();
+
+    res.status(200).json({
+      message: "Message marqué comme lu",
+      data: message,
+    });
+  } catch (error) {
+    console.error("MARK READ ERROR:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
