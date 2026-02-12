@@ -8,6 +8,8 @@ import {
   countUnreadMessages,
   deleteMessage,
   updateMessage,
+  getConversations,
+  markConversationAsRead,
 } from "../controllers/message.controller.js";
 
 const router = express.Router();
@@ -16,7 +18,13 @@ const router = express.Router();
 router.post("/", authMiddleware, sendMessage);
 router.get("/inbox", authMiddleware, getInbox);
 router.get("/unread/count", authMiddleware, countUnreadMessages); // comptage des messages non lus
+router.get("/conversations", authMiddleware, getConversations);
 router.get("/conversation/:userId", authMiddleware, getConversation);
+router.patch(
+  "/conversations/:userId/read",
+  authMiddleware,
+  markConversationAsRead
+);
 
 router.patch("/:id/read", authMiddleware, markMessageAsRead); // marquer comme lu
 router.put("/:id", authMiddleware, updateMessage);

@@ -208,3 +208,85 @@ export const updateMessage = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
+// ------------------ GET CONVERSATIONS ------------------
+export const getConversations = async (req, res) => {
+  try {
+    const userId = req.user._id;
+
+    // recuperer tous les messages de l'utilisateur
+    const messages = await Message.find({
+      $or: [{ sender: userId }, { receiver: userId }],
+    })
+      .sort({ createdAt: -1 })
+      .populate("sender", "username")
+      .populate("receiver", "username");
+
+    const conversationsMap = new Map();
+
+    for (const msg of messages) {
+      // determiner l'autre utilisateur
+      const otherUser =
+        msg.sender._id.toString() === userId.toString()
+          ? msg.receiver
+          : msg.sender;
+
+      const otherUserId = otherUser._id.toString();
+
+      // si la conversation existe deja on va ignorer (on garde le dernier message pour l'afficher en haut(pour le frontend))
+      if (!conversationsMap.has(otherUserId)) {
+        conversationsMap.set(otherUserId, {
+          user: {
+            id: otherUser._id,
+            username: otherUser.username,
+          },
+          lastMessage: msg.content,
+          lastMessageAt: msg.createdAt,
+          unreadCount: 0,
+        });
+      }
+
+      // compter les messages non lus recus
+      if (msg.receiver._id.toString() === userId.toString() && !msg.isRead) {
+        conversationsMap.get(otherUserId).unreadCount += 1;
+      }
+    }
+
+    res.status(200).json(Array.from(conversationsMap.values()));
+  } catch (error) {
+    console.error("GET CONVERSATIONS ERROR:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+// ------------------ MARK CONVERSATION AS READ ------------------
+export const markConversationAsRead = async (req, res) => {
+  try {
+    const userId = req.user._id;
+    const { userId: otherUserId } = req.params;
+
+    // validation ObjectId
+    if (!mongoose.Types.ObjectId.isValid(otherUserId)) {
+      return res.status(400).json({ message: "ID utilisateur invalide" });
+    }
+
+    const result = await Message.updateMany(
+      {
+        sender: otherUserId,
+        receiver: userId,
+        isRead: false,
+      },
+      {
+        $set: { isRead: true },
+      }
+    );
+
+    res.status(200).json({
+      message: "Conversation marquée comme lue",
+      updatedMessages: result.modifiedCount,
+    });
+  } catch (error) {
+    console.error("MARK CONVERSATION READ ERROR:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
