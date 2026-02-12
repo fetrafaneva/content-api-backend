@@ -4,11 +4,19 @@ import connectDB from "./configs/db.js";
 import authRoutes from "./routes/auth.routes.js";
 import postRoutes from "./routes/post.routes.js";
 import messageRoutes from "./routes/message.routes.js";
-
 import cookieParser from "cookie-parser";
+import { Server } from "socket.io";
 
 const app = express();
+const server = http.createServer(app);
 const PORT = process.env.PORT || 3000;
+
+// socket.io
+const io = new Server(server, {
+  cors: {
+    origin: "*", // à restreindre plus tard
+  },
+});
 
 // Database connection
 await connectDB();
