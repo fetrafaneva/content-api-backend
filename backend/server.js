@@ -26,6 +26,7 @@ app.use((req, res, next) => {
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/post", postRoutes);
 app.use("/api/v1/message", messageRoutes);
+app.use("/uploads", express.static("uploads"));
 
 // server HTTP (OBLIGATOIRE pour socket.io)
 const server = http.createServer(app);

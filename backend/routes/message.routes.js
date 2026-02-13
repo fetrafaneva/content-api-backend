@@ -15,7 +15,12 @@ import {
 const router = express.Router();
 
 // toutes les routes sont protégées
-router.post("/", authMiddleware, sendMessage);
+router.post(
+  "/",
+  authMiddleware,
+  uploadMessageFiles.array("files", 5),
+  sendMessage
+);
 router.get("/inbox", authMiddleware, getInbox);
 router.get("/unread/count", authMiddleware, countUnreadMessages); // comptage des messages non lus
 router.get("/conversations", authMiddleware, getConversations);
