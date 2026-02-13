@@ -7,13 +7,27 @@ export const sendMessage = async (req, res) => {
   try {
     const { receiverId, content } = req.body;
 
+    if (!content && (!req.files || req.files.length === 0)) {
+      return res.status(400).json({ message: "Message vide" });
+    }
+
+    const attachments =
+      req.files?.map((file) => ({
+        filename: file.filename,
+        originalName: file.originalname,
+        mimeType: file.mimetype,
+        size: file.size,
+        url: `/uploads/messages/${file.filename}`,
+      })) || [];
+
     const message = await Message.create({
       sender: req.user._id,
       receiver: receiverId,
       content,
+      attachments,
     });
 
-    // temps reel
+    // socket.io temps réel
     const receiverSocketId = onlineUsers.get(receiverId);
     if (receiverSocketId) {
       req.io.to(receiverSocketId).emit("new_message", message);
@@ -21,6 +35,7 @@ export const sendMessage = async (req, res) => {
 
     res.status(201).json(message);
   } catch (error) {
+    console.error(error);
     res.status(500).json({ message: "Internal server error" });
   }
 };
