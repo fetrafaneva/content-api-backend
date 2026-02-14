@@ -4,11 +4,13 @@ import {
   addComment,
   createPost,
   deletePost,
+  deleteReply,
   getPostById,
   getPosts,
   replyToComment,
   toggleLikePost,
   updatePost,
+  updateReply,
 } from "../controllers/post.controller.js";
 
 const router = express.Router();
@@ -28,5 +30,14 @@ router.post(
   authMiddleware,
   replyToComment
 );
-
+router.patch(
+  "/:postId/comment/:commentId/reply/:replyId",
+  authMiddleware,
+  updateReply
+);
+router.delete(
+  "/:postId/comment/:commentId/reply/:replyId",
+  authMiddleware,
+  deleteReply
+);
 export default router;
