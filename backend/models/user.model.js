@@ -54,10 +54,12 @@ const postSchema = new mongoose.Schema(
       ref: "User", // référence au modèle User
       required: true,
     },
-    likes: {
-      type: Number,
-      default: 0,
-    },
+    likes: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
     comments: [
       {
         user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
