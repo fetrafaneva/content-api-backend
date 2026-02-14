@@ -216,3 +216,40 @@ export const replyToComment = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
+// ------------------ UPDATE REPLY ------------------
+export const updateReply = async (req, res) => {
+  try {
+    const { postId, commentId, replyId } = req.params;
+    const { content } = req.body;
+
+    if (!content?.trim()) {
+      return res.status(400).json({ message: "Content required" });
+    }
+
+    const post = await Post.findById(postId);
+    if (!post) return res.status(404).json({ message: "Post not found" });
+
+    const comment = post.comments.id(commentId);
+    if (!comment) return res.status(404).json({ message: "Comment not found" });
+
+    const reply = comment.replies.id(replyId);
+    if (!reply) return res.status(404).json({ message: "Reply not found" });
+
+    // sécurité : seul l'auteur peut modifier
+    if (reply.user.toString() !== req.user._id.toString()) {
+      return res.status(403).json({ message: "Not allowed" });
+    }
+
+    reply.content = content;
+    reply.edited = true;
+    reply.editedAt = new Date();
+
+    await post.save();
+
+    res.status(200).json({ message: "Reply updated", reply });
+  } catch (error) {
+    console.error("UPDATE REPLY ERROR:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};

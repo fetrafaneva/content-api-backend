@@ -9,6 +9,7 @@ import {
   replyToComment,
   toggleLikePost,
   updatePost,
+  updateReply,
 } from "../controllers/post.controller.js";
 
 const router = express.Router();
@@ -23,6 +24,11 @@ router.put("/:id", authMiddleware, updatePost);
 router.get("/:id", getPostById);
 router.patch("/:id/like", authMiddleware, toggleLikePost);
 router.post("/:id/comment", authMiddleware, addComment);
+router.patch(
+  "/:postId/comment/:commentId/reply/:replyId",
+  authMiddleware,
+  updateReply
+);
 router.post(
   "/:postId/comment/:commentId/reply",
   authMiddleware,
