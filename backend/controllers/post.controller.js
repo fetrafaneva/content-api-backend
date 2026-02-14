@@ -151,3 +151,31 @@ export const toggleLikePost = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
+// ------------------ ADD COMMENT ------------------
+export const addComment = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { content } = req.body;
+
+    if (!content?.trim()) {
+      return res.status(400).json({ message: "Comment required" });
+    }
+
+    const post = await Post.findById(id);
+    if (!post) {
+      return res.status(404).json({ message: "Post not found" });
+    }
+
+    post.comments.push({
+      user: req.user._id,
+      content,
+    });
+
+    await post.save();
+
+    res.status(201).json({ message: "Comment added", comments: post.comments });
+  } catch (error) {
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
