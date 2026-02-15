@@ -122,9 +122,9 @@ backend/
 | DELETE | `/api/auth/:id`             | Delete post                                | yes                     |
 
 ### Comments & Replies
-| Method | Endpoint                                                          | Description                                | Authentication Required |
-|--------|-------------------------------------------------------------------|--------------------------------------------|-------------------------|
-| POST   | `/api/post/:id/comment`                                           | Comment a post                             | yes                     |
-| POST   | `/api/post/:postId/comment/:commentId/reply`                      | Reply to comment                           | yes                     |
-| PATCH  | `/api/post/:postId/comment/:commentId/reply/:replyId`             | Uptdate reply                              | yes                     |
-| DELETE | `/api/post/:postId/comment/:commentId/reply/:replyId`             | Delete reply                               | yes                     |
+| Method | Endpoint                                                  | Description                                | Authentication Required |
+|--------|-----------------------------------------------------------|--------------------------------------------|-------------------------|
+| POST   | `/api/post/:id/comment`                                   | Comment a post                             | yes                     |
+| POST   | `/api/post/:postId/comment/:commentId/reply`              | Reply to comment                           | yes                     |
+| PATCH  | `/api/post/:postId/comment/:commentId/reply/:replyId`     | Uptdate reply                              | yes                     |
+| DELETE | `/api/post/:postId/comment/:commentId/reply/:replyId`     | Delete reply                               | yes                     |
