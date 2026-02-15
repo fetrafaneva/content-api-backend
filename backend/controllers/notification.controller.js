@@ -1,5 +1,6 @@
 import { Notification } from "../models/notification.model.js";
 
+// ------------------ GET NOTIFICATION ------------------
 export const getMyNotifications = async (req, res) => {
   try {
     const notifications = await Notification.find({
