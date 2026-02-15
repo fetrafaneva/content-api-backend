@@ -106,33 +106,25 @@ backend/
 
 ## API Endpoints
 
-Authentication
+### Authentication
 | Method | Endpoint                    | Description                                | Authentication Required |
 |--------|-----------------------------|--------------------------------------------|-------------------------|
 | POST   | `/api/auth/register`        | Register a new user                        | No                      |
 | POST   | `/api/auth/login`           | User login                                 | No                      |
 | GET    | `/api/auth/logout`          | User logout                                | yes                     |
 
-Posts
+### Posts
 | Method | Endpoint                    | Description                                | Authentication Required |
 |--------|-----------------------------|--------------------------------------------|-------------------------|
-| POST   | `/api/post`                 | Create post                                | yes                      |
-| GET    | `/api/post`                 | Get all post                               | yes                      |
+| POST   | `/api/post`                 | Create post                                | yes                     |
+| GET    | `/api/post`                 | Get all post                               | yes                     |
 | PUT    | `/api/post/:id`             | Update post                                | yes                     |
 | DELETE | `/api/auth/:id`             | Delete post                                | yes                     |
 
-## Security Practices
-
-- **Password Hashing**: Utilizes bcrypt for secure storage.
-- **Token Management**: Short-lived access tokens with refresh mechanism; tokens stored in HttpOnly cookies.
-- **Input Validation**: Implemented on both client and server sides.
-- **CORS Protection**: Restricted to frontend origin.
-- **Email Security**: Uses secure email transport for verification and resets.
-
-## Demo
-
-## Contributing
-
-Contributions are welcome! Please fork the repository and submit a pull request.
-
-If this project helps you, consider starring the repository!
+### Comments & Replies
+| Method | Endpoint                                                          | Description                                | Authentication Required |
+|--------|-------------------------------------------------------------------|--------------------------------------------|-------------------------|
+| POST   | `/api/post/:id/comment`                                           | Comment a post                             | yes                     |
+| POST   | `/api/post/:postId/comment/:commentId/reply`                      | Reply to comment                           | yes                     |
+| PATCH  | `/api/post/:postId/comment/:commentId/reply/:replyId`             | Uptdate reply                              | yes                     |
+| DELETE | `/api/post/:postId/comment/:commentId/reply/:replyId`             | Delete reply                               | yes                     |
