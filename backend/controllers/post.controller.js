@@ -1,5 +1,6 @@
 import { Post } from "../models/user.model.js"; // on prend le Post de ton fichier unique
 import mongoose from "mongoose";
+import { createNotification } from "../utils/createNotification.js";
 
 // ------------------ CREATE POST ------------------
 export const createPost = async (req, res) => {
@@ -139,6 +140,15 @@ export const toggleLikePost = async (req, res) => {
     } else {
       // like
       post.likes.push(userId);
+    }
+
+    if (!alreadyLiked) {
+      await createNotification({
+        user: post.author,
+        fromUser: req.user._id,
+        type: "like",
+        post: post._id,
+      });
     }
 
     await post.save();
