@@ -148,4 +148,19 @@ backend/
 | GET    | `/api/notification/`                                      | Get notification                           | yes                     |
 | PATCH  | `/api/notification/:id/read`                              | Mark notiication as read                   | yes                     |
 
+## Security Practices
+
+- **Password Hashing**: Utilizes bcrypt for secure storage.
+- **Token Management**: JWT-based authentication.
+- Protected routes via middleware.
+- Environment variables for sensitive data
+- CORS configuration
+
+## Demo
+
+## Contributing
+
+Contributions are welcome! Please fork the repository and submit a pull request.
+
+If this project helps you, consider starring the repository!
 
