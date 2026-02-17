@@ -128,3 +128,20 @@ backend/
 | POST   | `/api/post/:postId/comment/:commentId/reply`              | Reply to comment                           | yes                     |
 | PATCH  | `/api/post/:postId/comment/:commentId/reply/:replyId`     | Uptdate reply                              | yes                     |
 | DELETE | `/api/post/:postId/comment/:commentId/reply/:replyId`     | Delete reply                               | yes                     |
+
+## Security Practices
+
+- **Password Hashing**: Utilizes bcrypt for secure storage.
+- **Token Management**: JWT-based authentication.
+- Protected routes via middleware.
+- Environment variables for sensitive data
+- CORS configuration
+
+## Demo
+
+## Contributing
+
+Contributions are welcome! Please fork the repository and submit a pull request.
+
+If this project helps you, consider starring the repository!
+
