@@ -8,6 +8,7 @@ import connectDB from "./configs/db.js";
 import authRoutes from "./routes/auth.routes.js";
 import postRoutes from "./routes/post.routes.js";
 import messageRoutes from "./routes/message.routes.js";
+import notificationRoutes from "./routes/notification.routes.js";
 import { socketHandler } from "./socket.js";
 
 const app = express();
@@ -26,6 +27,7 @@ app.use((req, res, next) => {
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/post", postRoutes);
 app.use("/api/v1/message", messageRoutes);
+app.use("/api/v1/notification", notificationRoutes);
 app.use("/uploads", express.static("uploads"));
 
 // server HTTP (OBLIGATOIRE pour socket.io)
