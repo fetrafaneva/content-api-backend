@@ -172,13 +172,16 @@ backend/
 
 ## Security Practices
 
-- **Password Hashing**: Utilizes bcrypt for secure storage.
-- **Token Management**: JWT-based authentication.
-- Protected routes via middleware.
-- Environment variables for sensitive data
-- CORS configuration
+- Passwords hashed with bcrypt
+- JWT authentication with middleware
+- Protected routes for sensitive actions
+- Input validation on backend
+- Environment variables for sensitive keys
+- CORS configuration for frontend only
 
-## Demo
+## Testing
+- Use Postman or Insomnia to test endpoints
+- Use Postman or Insomnia to test endpoints
 
 ## Contributing
 
