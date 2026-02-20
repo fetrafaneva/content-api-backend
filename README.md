@@ -15,15 +15,37 @@ The API is frontend-agnostic and can be consumed by any client (React, Flutter, 
 
 ## Key Features
 
-- User authentication with JWT
-- Secure password hashing
-- User management
-- Posts CRUD
-- Comments on posts
-- Replies to comments (threaded discussions)
-- Private messaging between users
-- Protected routes with middleware
-- Clean and modular architecture
+### User Management
+- Secure registration and login with JWT  
+- Password hashing with bcrypt  
+- Profile updates  
+
+### Posts
+- Create, read, update, delete posts  
+- Comments and threaded replies  
+- Likes system (optional)  
+
+### Messaging
+- Send private messages  
+- Real-time notifications with Socket.io  
+- Mark messages as read  
+- Count unread messages  
+- Update and delete messages  
+
+### Notifications
+- Track user notifications  
+- Mark notifications as read  
+
+### Security
+- JWT authentication  
+- Middleware for protected routes  
+- Input validation  
+- Environment variables for sensitive data  
+
+### Additional Features
+- Modular project structure  
+- Clean code with controllers, middleware, and routes  
+- Ready for deployment (Heroku, Render, Railway, etc.)
 
 ## Tech Stack
 
