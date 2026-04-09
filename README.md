@@ -1,4 +1,4 @@
-# Social-API REST
+# SocialApp-API REST
 
 A RESTful backend API built with Node.js, Express, and MongoDB. This API powers a social media application with users, posts, comments, replies, and private messaging.
 
